@@ -6,6 +6,9 @@ import com.ms.user.repositores.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class UserService {
 
@@ -21,6 +24,10 @@ public class UserService {
     public UserModel save(UserModel user) {
         UserModel userModel = userRepository.save(user);
         userProducer.publishMessageEmail(userModel);
-        return userRepository.save(userModel);
+        return userModel;
+    }
+
+    public Optional<UserModel> findById(String userId) {
+        return userRepository.findById(UUID.fromString(userId));
     }
 }

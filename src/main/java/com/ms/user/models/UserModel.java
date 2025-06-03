@@ -3,6 +3,8 @@ package com.ms.user.models;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,6 +17,9 @@ public class UserModel implements Serializable {
     private UUID userId;
     private String username;
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AddressModel> addresses = new ArrayList<>();;
 
     public UUID getUserId() {
         return userId;
@@ -38,5 +43,13 @@ public class UserModel implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<AddressModel> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<AddressModel> addresses) {
+        this.addresses = addresses;
     }
 }
